@@ -1,8 +1,9 @@
+body{
+	background-color: #F1F1F2 !important;
+}
 .main-container {
  display: flex;
  flex-direction: row;
-
- 
 }
 
 .sub-container {
