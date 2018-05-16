@@ -7,7 +7,6 @@ const port = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 const clientBundles = './public/services';
 const serverBundles = './templates/services';
 const serviceConfig = require('./service-config.json');

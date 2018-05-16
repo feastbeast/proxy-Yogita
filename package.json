@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon -i ./public/services -i ./templates/services ./server.js",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "starthttp": "nodemon -i ./public/services -i ./templates/services ./proxyhttpserver.js"
   },
   "keywords": [],
   "author": "",

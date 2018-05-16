@@ -40,45 +40,22 @@ client.on('error', () => {
 const requestHandler = function (req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   const num = req.url.split('/')[2];
-  if (Number(num)) {
-    fs.readFile(path.join(__dirname, './public/index.html'), 'utf8', (err, data) => {
-      if (err) {
-          	// console.log(err)
+  // if (Number(num)) {
+  //   fs.readFile(path.join(__dirname, './public/index.html'), 'utf8', (err, data) => {
+  //     if (err) {
+  //         	// console.log(err)
 
-          	res.writeHead(400);
-          	res.end(err);
-      } else {
-	          res.writeHead(200, { 'Content-Type': 'text/html' });
-	          res.end(data, 'utf8');
-      }
-    });
-  }
-  if (req.url.endsWith('sidebar.css')) {
-    // console.log(req.url);
-    const css = fs.createReadStream(path.join(__dirname, './public/sidebar.css'), 'utf8');
-
-    res.writeHead(200, { 'Content-Type': 'text/css' });
-    css.pipe(res);
-  }
-  if (req.url.endsWith('style.css')) {
-    // console.log(req.url);
-    const css = fs.createReadStream(path.join(__dirname, './public/style.css'), 'utf8');
-
-    res.writeHead(200, { 'Content-Type': 'text/css' });
-    css.pipe(res);
-  }
-  if (req.url.endsWith('Sidebar.js')) {
-    // console.log(req.url);
-    const bundle = fs.createReadStream(path.join(__dirname, './public/services/Sidebar.js'), 'utf8');
-
-    res.writeHead(200, { 'Content-Type': 'text/javascript' });
-    bundle.pipe(res);
-  }
-
+  //         	res.writeHead(400);
+  //         	res.end(err);
+  //     } else {
+	 //          res.writeHead(200, { 'Content-Type': 'text/html' });
+	 //          res.end(data, 'utf8');
+  //     }
+  //   });
+  // }
   if (req.url.startsWith('/restaurants')) {
-    	const id = Number(req.url.split('/')[3]);
-
-
+    console.log(req.url)
+    const id = Number(req.url.split('/')[2]);
     const components = renderComponents(services, { restaurantId: id });
     res.end(Layout(
       'FeastBeast',
@@ -89,6 +66,51 @@ const requestHandler = function (req, res) {
       }),
     ));
   }
+  if (req.url.endsWith('style.css')) {
+    console.log(req.url);
+    const css = fs.createReadStream(path.join(__dirname, './public/style.css'), 'utf8');
+
+    res.writeHead(200, { 'Content-Type': 'text/css' });
+    css.pipe(res);
+  }
+  if (req.url.endsWith('sidebar.css')) {
+    console.log(req.url);
+    const css = fs.createReadStream(path.join(__dirname, './public/sidebar.css'), 'utf8');
+
+    res.writeHead(200, { 'Content-Type': 'text/css' });
+    css.pipe(res);
+  }
+  if (req.url.endsWith('Sidebar.js')) {
+    console.log(req.url);
+    const bundle = fs.createReadStream(path.join(__dirname, './public/services/Sidebar.js'), 'utf8');
+
+    res.writeHead(200, { 'Content-Type': 'text/javascript' });
+    bundle.pipe(res);
+  }
+  if (req.url.endsWith('dom.development.js')) {
+    console.log(req.url);
+    const bundle = fs.createReadStream(path.join(__dirname, './public/lib/react-dom.development.js'), 'utf8');
+
+    res.writeHead(200, { 'Content-Type': 'text/javascript' });
+    bundle.pipe(res);
+  }
+  if (req.url.endsWith('react.development.js')) {
+    // console.log(req.url);
+    const bundle = fs.createReadStream(path.join(__dirname, './public/lib/react.development.js'), 'utf8');
+
+    res.writeHead(200, { 'Content-Type': 'text/javascript' });
+    bundle.pipe(res);
+  }
+   
+  
+  if (req.url.endsWith('index.html')) {
+    // console.log(req.url);
+    const bundle = fs.createReadStream(path.join(__dirname, './public/index.html'), 'utf8');
+
+    res.writeHead(200, { 'Content-Type': 'text/javascript' });
+    bundle.pipe(res);
+  }
+  
 };
 
 if (cluster.isMaster) {
