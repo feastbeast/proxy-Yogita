@@ -50,6 +50,7 @@ const requestHandler = function (req, res){
           	res.writeHead(400);
           	res.end(err);
           }else{
+
 	          res.writeHead(200, {'Content-Type': 'text/html'});
 	          res.end(data, 'utf8');   
           }
@@ -82,34 +83,13 @@ const requestHandler = function (req, res){
     	var id = Number(req.url.split("/")[3]);
     
 
-      client.get(id, (err, result) => {
-        if (result) {
-          //console.log("cached");
-          res.writeHead(200);
-          
-          res.end(result);
-        } else  {
-              const query = {
-                // give the query a unique name
-                name: 'fetch-user',
-                text: 'SELECT * FROM apateezside WHERE id = $1',
-                values: [id],
-              };
-              db.one(query)
-              .then((result) => {
-                //console.log("new")
-                  
-                  res.writeHead(200); 
-                  res.end(JSON.stringify(result));  
-                  client.setex(id, 3600, JSON.stringify(result));
-              })
-              .catch((error) => {
-                //console.log(error)
-                  res.writeHead(400);
-                  res.end(error.toString());
-              });
-        }
-      });
+      let components = renderComponents(services, {restaurantId: id});
+      res.end(Layout(
+        'FeastBeast',
+        App(...components),
+        Scripts(Object.keys(services), {restaurantId: id
+          , isModal: true})
+      ));
 
     }    
              
