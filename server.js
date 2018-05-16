@@ -1,6 +1,7 @@
 const newrelic = require('newrelic');
 const express = require('express');
 const path = require('path');
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -18,19 +19,17 @@ const App = require('./templates/app');
 const Scripts = require('./templates/scripts');
 
 // see: https://medium.com/styled-components/the-simple-guide-to-server-side-rendering-react-with-styled-components-d31c6b2b8fbf
-const renderComponents = (components, props = {}) => {
-  return Object.keys(components).map(item => {
-    let component = React.createElement(components[item], props);
-    return ReactDom.renderToString(component);
-  });
-};
+const renderComponents = (components, props = {}) => Object.keys(components).map((item) => {
+  const component = React.createElement(components[item], props);
+  return ReactDom.renderToString(component);
+});
 
-app.get('/restaurants/:id', function(req, res) {
-  let components = renderComponents(services, {restaurantId: req.params.id});
+app.get('/restaurants/:id', (req, res) => {
+  const components = renderComponents(services, { restaurantId: req.params.id });
   res.end(Layout(
     'FeastBeast',
     App(...components),
-    Scripts(Object.keys(services), {restaurantId: req.params.id, isModal: true})
+    Scripts(Object.keys(services), { restaurantId: req.params.id, isModal: true }),
   ));
 });
 

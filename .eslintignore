@@ -1,0 +1,11 @@
+.eslint*
+**/webpack.config.js
+**/bundle.js
+**/node_modules
+**/dist
+**/coverage
+**/tests
+**/newrelic.js
+**/lib
+**/sidebar-server.js
+**/sidebar.js
