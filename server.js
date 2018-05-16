@@ -30,7 +30,7 @@ app.get('/restaurants/:id', function(req, res) {
   res.end(Layout(
     'FeastBeast',
     App(...components),
-    Scripts(Object.keys(services), {restaurantId: req.params.id})
+    Scripts(Object.keys(services), {restaurantId: req.params.id, isModal: true})
   ));
 });
 
